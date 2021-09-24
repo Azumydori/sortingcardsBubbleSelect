@@ -1,17 +1,15 @@
 import "bootstrap";
 import "./style.css";
-const JOKER =
-  "<img src='https://media.istockphoto.com/vectors/dancing-joker-with-playing-cards-on-white-vector-id960303126' style='width: 1.4em; height: 1.4em;'>";
 const ICONS = ["♥", "♠", "♦", "♣"];
 const COLORS = ["black", "red"];
-const NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+const NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 
 const CARD_LIST = document.querySelector("#cardList");
 const CARD_LIST_ORDERED = document.querySelector("#cardListOrdered");
-const INPUT = document.querySelector("#NumberOfCards");
-const SORT_BUTTON_BUBBLE = document.querySelector("#sortButtonBubble");
-const SORT_BUTTON_SELECT = document.querySelector("#sortButtonSelect");
-const GENERATE_BUTTON = document.querySelector("#generatorButton");
+const INPUT = document.querySelector("#cardInput");
+const SORT_BUTTON_BUBBLE = document.querySelector("#bubbleSort");
+const SORT_BUTTON_SELECT = document.querySelector("#selectSort");
+const GENERATE_BUTTON = document.querySelector("#Draw");
 
 let cardList = [];
 let cardListBubble = [];
@@ -23,13 +21,12 @@ window.onload = function() {
 };
 
 function generateNewCards() {
-  //función que genera nuevas cartas cuando se pulsa el botón de generar
   let numberOfCards = "";
   GENERATE_BUTTON.addEventListener("click", event => {
-    numberOfCards = INPUT.value; //recoge dato del input
-    CARD_LIST.innerHTML = ""; //vacía div y borra cartas anteriores
+    numberOfCards = INPUT.value;
+    CARD_LIST.innerHTML = "";
     CARD_LIST_ORDERED.innerHTML = "";
-    cardList = []; //vacía array y borra cartas anteriores
+    cardList = [];
     let row = document.createElement("div");
     for (let index = 0; index < numberOfCards; index++) {
       let cardTemp = getCard();
@@ -41,12 +38,10 @@ function generateNewCards() {
 }
 
 function randomElement(myArray) {
-  // función que devuelve un elemento aleatorio de un array dado
   return myArray[Math.floor(Math.random() * myArray.length)];
 }
 
 function getCard() {
-  //función que genera el valor de una carta (simbolo, número y color)
   let cardAux = {
     symbol: "",
     number: ""
@@ -58,7 +53,6 @@ function getCard() {
 }
 
 function drawCard(myObject, place, row) {
-  //función que imprime la fila (array) de cartas en pantalla
   let topBox = document.createElement("div");
   let centerBox = document.createElement("div");
   let bottomBox = document.createElement("div");
@@ -90,9 +84,6 @@ function drawCard(myObject, place, row) {
   }
   if (myObject.number == 13) {
     centerBox.innerHTML = "K";
-  }
-  if (myObject.number == 14) {
-    centerBox.innerHTML = JOKER;
   }
 
   bottomBox.id = "bottomBox";
@@ -141,12 +132,11 @@ function sortCardsSelect() {
 }
 
 function bubbleSort(arr) {
-  let wall = arr.length - 1; //we start the wall at the end of the array
+  let wall = arr.length - 1;
   let contador = 0;
   while (wall > 0) {
     let index = 0;
     while (index < wall) {
-      //compare the adjacent positions, if the right one is bigger, we have to swap
       if (arr[index].number > arr[index + 1].number) {
         let aux = arr[index];
         arr[index] = arr[index + 1];
@@ -157,7 +147,7 @@ function bubbleSort(arr) {
 
       index++;
     }
-    wall--; //decrease the wall for optimization
+    wall--;
   }
   console.log(arr);
   return arr;
